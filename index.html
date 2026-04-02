@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>역사 대화 프롬프트 제너레이터</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
     body {
-        font-family: 'Pretendard', sans-serif;
+      font-family: 'Pretendard', sans-serif;
     }
+
     /* Funnel 애니메이션 효과 */
     .step-container {
       display: none;
@@ -17,62 +20,93 @@
       transform: translateY(10px);
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
+
     .step-container.active {
       display: block;
       opacity: 1;
       transform: translateY(0);
     }
+
     /* 스크롤바 커스텀 */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
-    
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #cbd5e1;
+    }
+
     /* Toast Animation */
     .toast-show {
-        opacity: 1 !important;
-        transform: translate(-50%, 0) !important;
+      opacity: 1 !important;
+      transform: translate(-50%, 0) !important;
     }
-    
+
     /* Modal Animation */
     .modal-show {
-        display: flex !important;
-        opacity: 1 !important;
+      display: flex !important;
+      opacity: 1 !important;
     }
-    .modal-show > div {
-        transform: scale(1) !important;
+
+    .modal-show>div {
+      transform: scale(1) !important;
     }
 
     /* Modal radio selection styling */
-    input[type="radio"]:checked + div {
-        background-color: #fefce8; /* bg-yellow-50 */
-        border-color: #facc15; /* border-yellow-400 */
-        color: #854d0e; /* text-yellow-800 */
-        font-weight: 700;
+    input[type="radio"]:checked+div {
+      background-color: #fefce8;
+      /* bg-yellow-50 */
+      border-color: #facc15;
+      /* border-yellow-400 */
+      color: #854d0e;
+      /* text-yellow-800 */
+      font-weight: 700;
     }
   </style>
 </head>
+
 <body class="bg-transparent min-h-screen flex items-center justify-center p-0 sm:p-4 text-gray-800">
 
-  <div class="bg-white sm:rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:border border-gray-100 w-full lg:max-w-3xl flex flex-col overflow-hidden h-screen sm:h-auto sm:max-h-[90vh]">
-    
+  <div
+    class="bg-white sm:rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:border border-gray-100 w-full lg:max-w-3xl flex flex-col overflow-hidden h-screen sm:h-auto sm:max-h-[90vh]">
+
     <!-- Header (Crown Yuja) -->
-    <div class="bg-gradient-to-b from-yellow-50 to-white px-6 py-8 text-center shrink-0 border-b border-gray-100/50 relative overflow-hidden">
+    <div
+      class="bg-gradient-to-b from-yellow-50 to-white px-6 py-8 text-center shrink-0 border-b border-gray-100/50 relative overflow-hidden">
       <!-- Decorative background elements -->
-      <div class="absolute top-0 left-0 w-32 h-32 bg-yellow-100 rounded-full blur-3xl opacity-50 -translate-x-1/2 -translate-y-1/2"></div>
-      <div class="absolute bottom-0 right-0 w-32 h-32 bg-orange-100 rounded-full blur-3xl opacity-50 translate-x-1/3 translate-y-1/3"></div>
-      
+      <div
+        class="absolute top-0 left-0 w-32 h-32 bg-yellow-100 rounded-full blur-3xl opacity-50 -translate-x-1/2 -translate-y-1/2">
+      </div>
+      <div
+        class="absolute bottom-0 right-0 w-32 h-32 bg-orange-100 rounded-full blur-3xl opacity-50 translate-x-1/3 translate-y-1/3">
+      </div>
+
       <!-- Home Link Button -->
-      <a href="https://tlfltmtm-afk.github.io/" class="absolute top-4 left-4 bg-white hover:bg-yellow-50 border border-yellow-200 text-yellow-700 w-11 h-11 rounded-full flex items-center justify-center shadow-sm transition-all hover:scale-105 active:scale-95 group z-20" title="바이브코딩 홈">
+      <a href="https://tlfltmtm-afk.github.io/"
+        class="absolute top-4 left-4 bg-white hover:bg-yellow-50 border border-yellow-200 text-yellow-700 w-11 h-11 rounded-full flex items-center justify-center shadow-sm transition-all hover:scale-105 active:scale-95 group z-20"
+        title="바이브코딩 홈">
         <span class="text-xl group-hover:rotate-12 transition-transform">🏠</span>
       </a>
 
       <!-- New Link Button -->
-      <a href="assessment.html" class="absolute top-4 right-4 bg-white hover:bg-yellow-50 border border-yellow-200 text-yellow-700 w-11 h-11 rounded-full flex items-center justify-center shadow-sm transition-all hover:scale-105 active:scale-95 group z-20" title="평가지 보기">
+      <a href="assessment.html"
+        class="absolute top-4 right-4 bg-white hover:bg-yellow-50 border border-yellow-200 text-yellow-700 w-11 h-11 rounded-full flex items-center justify-center shadow-sm transition-all hover:scale-105 active:scale-95 group z-20"
+        title="평가지 보기">
         <span class="text-xl group-hover:rotate-12 transition-transform">📄</span>
       </a>
 
-      <div class="text-5xl mb-3 flex justify-center items-center gap-1 drop-shadow-sm transition-transform hover:scale-105 duration-300">
+      <div
+        class="text-5xl mb-3 flex justify-center items-center gap-1 drop-shadow-sm transition-transform hover:scale-105 duration-300">
         <span class="text-3xl relative top-[-10px] transform -rotate-12">👑</span>
         <span class="text-[54px] z-10">🍋</span>
         <span class="text-2xl relative top-[-6px] right-[10px] transform rotate-12">🍃</span>
@@ -83,15 +117,17 @@
 
     <!-- Funnel Area -->
     <div id="funnel-container" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-8 scroll-smooth">
-      
+
       <!-- Step 1 -->
       <div id="step-1" class="step-container active">
         <div class="flex justify-between items-center mb-4">
           <h2 class="font-bold text-lg text-gray-800 flex items-center gap-2">
-            <span class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">1</span> 
+            <span
+              class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">1</span>
             학년을 선택해 주세요
           </h2>
-          <button onclick="skipStep(1)" class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
+          <button onclick="skipStep(1)"
+            class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5" id="grid-step-1"></div>
       </div>
@@ -100,10 +136,12 @@
       <div id="step-2" class="step-container">
         <div class="flex justify-between items-center mb-4">
           <h2 class="font-bold text-lg text-gray-800 flex items-center gap-2">
-            <span class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">2</span> 
+            <span
+              class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">2</span>
             어떤 역사가 궁금한가요?
           </h2>
-          <button onclick="skipStep(2)" class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
+          <button onclick="skipStep(2)"
+            class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
         </div>
         <div class="grid grid-cols-2 gap-2.5" id="grid-step-2"></div>
       </div>
@@ -112,10 +150,12 @@
       <div id="step-3" class="step-container">
         <div class="flex justify-between items-center mb-4">
           <h2 class="font-bold text-lg text-gray-800 flex items-center gap-2">
-            <span class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">3</span> 
+            <span
+              class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">3</span>
             구체적으로 무엇을 알아볼까요?
           </h2>
-          <button onclick="skipStep(3)" class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
+          <button onclick="skipStep(3)"
+            class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="grid-step-3"></div>
       </div>
@@ -125,17 +165,22 @@
         <div class="pb-4 pt-1 mb-2">
           <div class="flex justify-between items-center mb-3">
             <h2 class="font-bold text-lg text-gray-800 flex items-center gap-2">
-              <span class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">4</span> 
+              <span
+                class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">4</span>
               주제를 선택해 주세요
             </h2>
-            <button onclick="skipStep(4)" class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
+            <button onclick="skipStep(4)"
+              class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
           </div>
           <div class="flex gap-2">
             <div class="relative flex-1 group">
-              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400 transition-colors group-focus-within:text-yellow-500">🔍</span>
-              <input type="text" id="search-4" onkeyup="filterList(4)" placeholder="검색어를 입력하세요..." class="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[15px] focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 transition-all shadow-sm">
+              <span
+                class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400 transition-colors group-focus-within:text-yellow-500">🔍</span>
+              <input type="text" id="search-4" onkeyup="filterList(4)" placeholder="검색어를 입력하세요..."
+                class="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[15px] focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 transition-all shadow-sm">
             </div>
-            <button onclick="openModal(4)" class="shrink-0 bg-gray-800 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-700 active:scale-95 transition-all flex items-center gap-1.5 shadow-sm">
+            <button onclick="openModal(4)"
+              class="shrink-0 bg-gray-800 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-700 active:scale-95 transition-all flex items-center gap-1.5 shadow-sm">
               ✍️ 직접입력
             </button>
           </div>
@@ -148,17 +193,22 @@
         <div class="pb-4 pt-1 mb-2">
           <div class="flex justify-between items-center mb-3">
             <h2 class="font-bold text-lg text-gray-800 flex items-center gap-2">
-              <span class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">5</span> 
+              <span
+                class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">5</span>
               상세 항목과 역할을 선택해 주세요
             </h2>
-            <button onclick="skipStep(5)" class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
+            <button onclick="skipStep(5)"
+              class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
           </div>
           <div class="flex gap-2">
             <div class="relative flex-1 group">
-              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400 transition-colors group-focus-within:text-yellow-500">🔍</span>
-              <input type="text" id="search-5" onkeyup="filterList(5)" placeholder="검색어를 입력하세요..." class="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[15px] focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 transition-all shadow-sm">
+              <span
+                class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400 transition-colors group-focus-within:text-yellow-500">🔍</span>
+              <input type="text" id="search-5" onkeyup="filterList(5)" placeholder="검색어를 입력하세요..."
+                class="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-[15px] focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 transition-all shadow-sm">
             </div>
-            <button onclick="openModal(5)" class="shrink-0 bg-gray-800 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-700 active:scale-95 transition-all flex items-center gap-1.5 shadow-sm">
+            <button onclick="openModal(5)"
+              class="shrink-0 bg-gray-800 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-700 active:scale-95 transition-all flex items-center gap-1.5 shadow-sm">
               ✍️ 직접입력
             </button>
           </div>
@@ -170,10 +220,12 @@
       <div id="step-6" class="step-container">
         <div class="flex justify-between items-center mb-4">
           <h2 class="font-bold text-lg text-gray-800 flex items-center gap-2">
-            <span class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">6</span> 
+            <span
+              class="flex items-center justify-center bg-yellow-400 text-yellow-900 w-6 h-6 rounded-full text-sm font-bold shadow-sm">6</span>
             대화 스타일을 선택해 주세요
           </h2>
-          <button onclick="skipStep(6)" class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
+          <button onclick="skipStep(6)"
+            class="text-[13px] text-gray-400 hover:text-gray-600 font-medium transition-colors">건너뛰기</button>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5" id="grid-step-6"></div>
       </div>
@@ -182,19 +234,23 @@
 
     <!-- Footer Action Area -->
     <div class="p-4 sm:p-5 border-t border-gray-100 bg-gray-50/50 flex flex-col gap-3 shrink-0 z-20">
-      
+
       <!-- Selection Summary Block -->
-      <div id="selection-summary" class="bg-white rounded-xl p-4 border border-yellow-200 shadow-sm text-sm text-gray-700 hidden transition-all">
-        <div class="font-bold text-yellow-800 mb-2 flex items-center gap-1.5"><span class="text-base">📝</span> 현재 선택 요약</div>
+      <div id="selection-summary"
+        class="bg-white rounded-xl p-4 border border-yellow-200 shadow-sm text-sm text-gray-700 hidden transition-all">
+        <div class="font-bold text-yellow-800 mb-2 flex items-center gap-1.5"><span class="text-base">📝</span> 현재 선택 요약
+        </div>
         <div id="summary-content" class="leading-relaxed whitespace-pre-line text-gray-600"></div>
       </div>
 
       <div class="flex flex-col sm:flex-row items-center gap-2.5 w-full">
-        <select id="ai-selector" class="w-full sm:w-[160px] border border-gray-200 rounded-xl px-4 py-3.5 text-[15px] font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 bg-white shadow-sm cursor-pointer transition-all">
+        <select id="ai-selector"
+          class="w-full sm:w-[160px] border border-gray-200 rounded-xl px-4 py-3.5 text-[15px] font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 bg-white shadow-sm cursor-pointer transition-all">
           <option value="chatgpt">ChatGPT로 열기</option>
           <option value="gemini">Gemini로 열기</option>
         </select>
-        <button onclick="generatePrompt()" class="w-full flex-1 bg-yellow-400 hover:bg-yellow-500 text-yellow-950 font-bold py-3.5 px-6 rounded-xl shadow-sm hover:shadow active:scale-[0.98] transition-all text-[16px] flex justify-center items-center gap-2.5">
+        <button onclick="generatePrompt()"
+          class="w-full flex-1 bg-yellow-400 hover:bg-yellow-500 text-yellow-950 font-bold py-3.5 px-6 rounded-xl shadow-sm hover:shadow active:scale-[0.98] transition-all text-[16px] flex justify-center items-center gap-2.5">
           <span class="text-xl">🚀</span> AI 대화 시작하기
         </button>
       </div>
@@ -203,35 +259,48 @@
   </div>
 
   <!-- custom modal -->
-  <div id="custom-modal" class="fixed inset-0 bg-gray-900/40 z-50 flex items-center justify-center backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="bg-white rounded-2xl shadow-2xl p-6 w-[90%] max-w-sm transform scale-95 transition-transform duration-300">
+  <div id="custom-modal"
+    class="fixed inset-0 bg-gray-900/40 z-50 flex items-center justify-center backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <div
+      class="bg-white rounded-2xl shadow-2xl p-6 w-[90%] max-w-sm transform scale-95 transition-transform duration-300">
       <h3 id="modal-title" class="text-lg font-bold mb-4 text-gray-800 flex items-center gap-2">
         <span>✍️</span> 직접 입력해주세요
       </h3>
-      <input type="text" id="modal-input" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 focus:outline-none mb-4 text-[15px] shadow-sm transition-all" placeholder="내용을 입력하세요..." />
-      
+      <input type="text" id="modal-input"
+        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 focus:outline-none mb-4 text-[15px] shadow-sm transition-all"
+        placeholder="내용을 입력하세요..." />
+
       <div id="modal-role-options" class="flex gap-2 mb-5 hidden">
         <label class="flex-1 cursor-pointer">
           <input type="radio" name="modal_role" value="self" checked class="hidden" onchange="updateModalRadioStyles()">
-          <div class="border border-gray-200 rounded-xl p-3 text-center text-[13px] text-gray-600 transition-colors bg-yellow-50 border-yellow-400 text-yellow-800 font-bold modal-radio-div">본인 빙의</div>
+          <div
+            class="border border-gray-200 rounded-xl p-3 text-center text-[13px] text-gray-600 transition-colors bg-yellow-50 border-yellow-400 text-yellow-800 font-bold modal-radio-div">
+            본인 빙의</div>
         </label>
         <label class="flex-1 cursor-pointer">
           <input type="radio" name="modal_role" value="witness" class="hidden" onchange="updateModalRadioStyles()">
-          <div class="border border-gray-200 rounded-xl p-3 text-center text-[13px] text-gray-600 transition-colors bg-white modal-radio-div">지인(목격자)</div>
+          <div
+            class="border border-gray-200 rounded-xl p-3 text-center text-[13px] text-gray-600 transition-colors bg-white modal-radio-div">
+            지인(목격자)</div>
         </label>
       </div>
 
       <div class="flex justify-end gap-2.5">
-        <button onclick="closeModal()" class="px-5 py-2.5 rounded-xl text-[15px] font-medium text-gray-500 hover:bg-gray-100 active:scale-95 transition-all">취소</button>
-        <button onclick="confirmModal()" class="px-5 py-2.5 rounded-xl text-[15px] bg-gray-900 hover:bg-gray-800 text-white font-medium active:scale-95 transition-all shadow-sm">입력 확인</button>
+        <button onclick="closeModal()"
+          class="px-5 py-2.5 rounded-xl text-[15px] font-medium text-gray-500 hover:bg-gray-100 active:scale-95 transition-all">취소</button>
+        <button onclick="confirmModal()"
+          class="px-5 py-2.5 rounded-xl text-[15px] bg-gray-900 hover:bg-gray-800 text-white font-medium active:scale-95 transition-all shadow-sm">입력
+          확인</button>
       </div>
     </div>
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[60] bg-gray-900/95 backdrop-blur text-white px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 transition-all duration-400 opacity-0 pointer-events-none -translate-y-[20px]">
+  <div id="toast"
+    class="fixed top-6 left-1/2 -translate-x-1/2 z-[60] bg-gray-900/95 backdrop-blur text-white px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 transition-all duration-400 opacity-0 pointer-events-none -translate-y-[20px]">
     <span class="text-yellow-400 text-xl">✨</span>
-    <span id="toast-message" class="text-[15px] font-medium tracking-tight whitespace-nowrap">프롬프트가 클립보드에 복사되었습니다!</span>
+    <span id="toast-message" class="text-[15px] font-medium tracking-tight whitespace-nowrap">프롬프트가 클립보드에
+      복사되었습니다!</span>
   </div>
 
   <script>
@@ -288,7 +357,7 @@
       grades: ["초1~2", "초3~4", "초5~6", "중등", "고등", "성인"],
       subjects: ["한국사", "세계사"],
       categories: ["시대", "국가", "인물", "사건"],
-      convStyles: ["이야기꾼", "뉴스기자", "백과사전", "선생님", "개그맨"]
+      convStyles: ["이야기꾼", "뉴스기자", "토론대결꾼", "선생님", "개그맨"]
     };
 
     // 버튼 렌더링
@@ -297,7 +366,7 @@
       renderButtons('grid-step-2', config.subjects, (val) => selectStep(2, 'subject', val));
       renderButtons('grid-step-3', config.categories, (val) => selectStep(3, 'category', val));
       renderButtons('grid-step-6', config.convStyles, (val) => selectStep(6, 'convStyle', val));
-      
+
       // Step 6 직접 입력 버튼 추가
       const step6Grid = document.getElementById('grid-step-6');
       const manualBtn = document.createElement('button');
@@ -320,14 +389,14 @@
     // 단계 선택 로직
     function selectStep(stepNum, key, value, roleVal = null) {
       state[key] = value;
-      if(roleVal) state.role = roleVal;
-      
-      if(key !== 'detail2' || !roleVal) {
-          highlightSelection(`grid-step-${stepNum}`, value);
+      if (roleVal) state.role = roleVal;
+
+      if (key !== 'detail2' || !roleVal) {
+        highlightSelection(`grid-step-${stepNum}`, value);
       } else {
-          highlightCardSelection(`grid-step-${stepNum}`, value, roleVal);
+        highlightCardSelection(`grid-step-${stepNum}`, value, roleVal);
       }
-      
+
       // 하위 스텝 꼬임 방지
       if (stepNum === 2) { state.category = state.detail1 = state.detail2 = state.role = state.convStyle = null; hideStepsFrom(3); }
       if (stepNum === 3) { state.detail1 = state.detail2 = state.role = state.convStyle = null; hideStepsFrom(4); }
@@ -340,23 +409,23 @@
 
     function skipStep(stepNum) {
       const keys = ['grade', 'subject', 'category', 'detail1', 'detail2', 'convStyle'];
-      state[keys[stepNum-1]] = '미정';
+      state[keys[stepNum - 1]] = '미정';
       clearSelection(`grid-step-${stepNum}`);
-      if(stepNum === 5) state.role = '미정';
-      
+      if (stepNum === 5) state.role = '미정';
+
       if (stepNum === 2 || stepNum === 3) {
-          state.detail1 = state.detail2 = state.role = state.convStyle = '미정';
-          hideStepsFrom(stepNum + 1);
-          updateSummary();
-          return;
+        state.detail1 = state.detail2 = state.role = state.convStyle = '미정';
+        hideStepsFrom(stepNum + 1);
+        updateSummary();
+        return;
       }
       if (stepNum === 4) {
-          state.detail2 = state.role = state.convStyle = '미정';
-          hideStepsFrom(5);
+        state.detail2 = state.role = state.convStyle = '미정';
+        hideStepsFrom(5);
       }
       if (stepNum === 5) {
-          state.convStyle = '미정';
-          hideStepsFrom(6);
+        state.convStyle = '미정';
+        hideStepsFrom(6);
       }
       showNextStep(stepNum);
       updateSummary();
@@ -364,9 +433,9 @@
 
     function showNextStep(currentStep) {
       const nextStep = currentStep + 1;
-      
+
       if (currentStep === 3) {
-        if(!state.subject || !state.category || state.subject === '미정' || state.category === '미정') return;
+        if (!state.subject || !state.category || state.subject === '미정' || state.category === '미정') return;
         renderStep4();
       }
 
@@ -404,9 +473,9 @@
         const el = document.getElementById(`step-${i}`);
         if (el) {
           el.classList.remove('active');
-          if(i === 4 || i === 5) {
-             const searchEl = document.getElementById(`search-${i}`);
-             if(searchEl) searchEl.value = ''; 
+          if (i === 4 || i === 5) {
+            const searchEl = document.getElementById(`search-${i}`);
+            if (searchEl) searchEl.value = '';
           }
         }
       }
@@ -414,7 +483,7 @@
 
     function highlightSelection(containerId, value) {
       const container = document.getElementById(containerId);
-      if(!container) return;
+      if (!container) return;
       const btns = container.querySelectorAll('.item-btn');
       btns.forEach(btn => {
         if (btn.innerText === value) {
@@ -427,30 +496,30 @@
 
     function clearSelection(containerId) {
       const container = document.getElementById(containerId);
-      if(!container) return;
+      if (!container) return;
       const btns = container.querySelectorAll('.item-btn, .item-card');
       btns.forEach(btn => {
-        if(btn.classList.contains('item-btn')){
-           btn.classList.remove('bg-yellow-50', 'border-yellow-400', 'text-yellow-800', 'ring-2', 'ring-yellow-400/20');
+        if (btn.classList.contains('item-btn')) {
+          btn.classList.remove('bg-yellow-50', 'border-yellow-400', 'text-yellow-800', 'ring-2', 'ring-yellow-400/20');
         } else {
-           btn.classList.remove('border-yellow-400', 'ring-2', 'ring-yellow-400/20', 'bg-yellow-50/30');
-           const sb = btn.querySelector('.self-btn');
-           const wb = btn.querySelector('.witness-btn');
-           if(sb) { sb.classList.remove('bg-yellow-400', 'text-yellow-900'); sb.classList.add('bg-gray-100', 'text-gray-600'); }
-           if(wb) { wb.classList.remove('bg-yellow-400', 'text-yellow-900'); wb.classList.add('bg-gray-100', 'text-gray-600'); }
+          btn.classList.remove('border-yellow-400', 'ring-2', 'ring-yellow-400/20', 'bg-yellow-50/30');
+          const sb = btn.querySelector('.self-btn');
+          const wb = btn.querySelector('.witness-btn');
+          if (sb) { sb.classList.remove('bg-yellow-400', 'text-yellow-900'); sb.classList.add('bg-gray-100', 'text-gray-600'); }
+          if (wb) { wb.classList.remove('bg-yellow-400', 'text-yellow-900'); wb.classList.add('bg-gray-100', 'text-gray-600'); }
         }
       });
     }
 
     function highlightCardSelection(containerId, value, roleVal) {
       const container = document.getElementById(containerId);
-      if(!container) return;
+      if (!container) return;
       const cards = container.querySelectorAll('.item-card');
       cards.forEach(card => {
         const name = card.getAttribute('data-val');
         const selfBtn = card.querySelector('.self-btn');
         const witnessBtn = card.querySelector('.witness-btn');
-        
+
         card.classList.remove('border-yellow-400', 'ring-2', 'ring-yellow-400/20', 'bg-yellow-50/30');
         selfBtn.classList.remove('bg-yellow-400', 'text-yellow-900');
         selfBtn.classList.add('bg-gray-100', 'text-gray-600');
@@ -460,11 +529,11 @@
         if (name === value) {
           card.classList.add('border-yellow-400', 'ring-2', 'ring-yellow-400/20', 'bg-yellow-50/30');
           if (roleVal === 'self') {
-             selfBtn.classList.remove('bg-gray-100', 'text-gray-600');
-             selfBtn.classList.add('bg-yellow-400', 'text-yellow-900');
+            selfBtn.classList.remove('bg-gray-100', 'text-gray-600');
+            selfBtn.classList.add('bg-yellow-400', 'text-yellow-900');
           } else if (roleVal === 'witness') {
-             witnessBtn.classList.remove('bg-gray-100', 'text-gray-600');
-             witnessBtn.classList.add('bg-yellow-400', 'text-yellow-900');
+            witnessBtn.classList.remove('bg-gray-100', 'text-gray-600');
+            witnessBtn.classList.add('bg-yellow-400', 'text-yellow-900');
           }
         }
       });
@@ -479,10 +548,10 @@
 
     function renderStep5() {
       const container = document.getElementById('grid-step-5');
-      if(state.category === '인물') {
-          const data = historyData[state.subject]['인물'][state.detail1];
-          if(!data) return;
-          container.innerHTML = data.map(item => `
+      if (state.category === '인물') {
+        const data = historyData[state.subject]['인물'][state.detail1];
+        if (!data) return;
+        container.innerHTML = data.map(item => `
             <div class="item-card bg-white border border-gray-200 rounded-xl p-2 sm:p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 shadow-sm transition-all" data-val="${item}">
                <div class="font-bold text-gray-800 text-[14px] sm:text-[15px] pl-1 break-keep item-name">${item}</div>
                <div class="flex gap-1.5 w-full sm:w-auto shrink-0">
@@ -492,14 +561,14 @@
             </div>
           `).join('');
       } else {
-          const data = historyData[state.subject][state.category];
-          // 주제가 배열인 경우(시대, 국가, 사건) detail1 선택 후 추가 상세가 없을 수 있음
-          if(Array.isArray(data)) {
-              // 이미 4단계에서 선택했으므로 5단계는 '추가 상세 없음' 등으로 처리하거나 건너뜀
-              container.innerHTML = '<div class="col-span-full p-4 text-center text-gray-400 text-sm">상세 항목이 없습니다. 바로 다음 단계를 확인하세요.</div>';
-          } else {
-             // 인물의 경우 이미 위에서 처리함
-          }
+        const data = historyData[state.subject][state.category];
+        // 주제가 배열인 경우(시대, 국가, 사건) detail1 선택 후 추가 상세가 없을 수 있음
+        if (Array.isArray(data)) {
+          // 이미 4단계에서 선택했으므로 5단계는 '추가 상세 없음' 등으로 처리하거나 건너뜀
+          container.innerHTML = '<div class="col-span-full p-4 text-center text-gray-400 text-sm">상세 항목이 없습니다. 바로 다음 단계를 확인하세요.</div>';
+        } else {
+          // 인물의 경우 이미 위에서 처리함
+        }
       }
     }
 
@@ -527,13 +596,13 @@
       const input = document.getElementById('modal-input');
       const roleOptions = document.getElementById('modal-role-options');
       input.value = '';
-      
+
       if (stepNum === 5 && state.category === '인물') {
-          roleOptions.classList.remove('hidden');
-          document.querySelector('input[name="modal_role"][value="self"]').checked = true;
-          updateModalRadioStyles();
+        roleOptions.classList.remove('hidden');
+        document.querySelector('input[name="modal_role"][value="self"]').checked = true;
+        updateModalRadioStyles();
       } else {
-          roleOptions.classList.add('hidden');
+        roleOptions.classList.add('hidden');
       }
 
       modal.classList.remove('opacity-0', 'pointer-events-none');
@@ -565,14 +634,14 @@
       if (input !== "") {
         const key = currentModalStep === 4 ? 'detail1' : (currentModalStep === 5 ? 'detail2' : 'convStyle');
         let roleVal = null;
-        if(currentModalStep === 5 && state.category === '인물') {
-            roleVal = document.querySelector('input[name="modal_role"]:checked').value;
+        if (currentModalStep === 5 && state.category === '인물') {
+          roleVal = document.querySelector('input[name="modal_role"]:checked').value;
         }
         selectStep(currentModalStep, key, input, roleVal);
         closeModal();
       }
     }
-    
+
     document.getElementById('modal-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') confirmModal(); });
 
     // Summary Update
@@ -580,18 +649,18 @@
       const summaryBox = document.getElementById('selection-summary');
       const content = document.getElementById('summary-content');
       const arr = [];
-      if(state.grade) arr.push(`학년: <span class="text-gray-900 font-medium">${state.grade}</span>`);
-      if(state.subject) arr.push(`과목: <span class="text-gray-900 font-medium">${state.subject}</span>`);
-      if(state.category) arr.push(`분류: <span class="text-gray-900 font-medium">${state.category}</span>`);
-      if(state.detail1) arr.push(`주제: <span class="text-gray-900 font-medium">${state.detail1}</span>`);
-      if(state.detail2 && state.detail2 !== '미정') arr.push(`상세: <span class="text-gray-900 font-medium">${state.detail2}</span>`);
-      if(state.role && state.role !== '미정') {
-          const roleTxt = state.role === 'self' ? '본인' : '지인(목격자)';
-          arr.push(`역할: <span class="text-yellow-700 font-bold">${roleTxt}</span>`);
+      if (state.grade) arr.push(`학년: <span class="text-gray-900 font-medium">${state.grade}</span>`);
+      if (state.subject) arr.push(`과목: <span class="text-gray-900 font-medium">${state.subject}</span>`);
+      if (state.category) arr.push(`분류: <span class="text-gray-900 font-medium">${state.category}</span>`);
+      if (state.detail1) arr.push(`주제: <span class="text-gray-900 font-medium">${state.detail1}</span>`);
+      if (state.detail2 && state.detail2 !== '미정') arr.push(`상세: <span class="text-gray-900 font-medium">${state.detail2}</span>`);
+      if (state.role && state.role !== '미정') {
+        const roleTxt = state.role === 'self' ? '본인' : '지인(목격자)';
+        arr.push(`역할: <span class="text-yellow-700 font-bold">${roleTxt}</span>`);
       }
-      if(state.convStyle) arr.push(`스타일: <span class="text-blue-600 font-bold">${state.convStyle}</span>`);
+      if (state.convStyle) arr.push(`스타일: <span class="text-blue-600 font-bold">${state.convStyle}</span>`);
 
-      if(arr.length > 0) {
+      if (arr.length > 0) {
         content.innerHTML = arr.join(' &nbsp;/&nbsp; ');
         summaryBox.classList.remove('hidden');
       } else {
@@ -616,7 +685,7 @@
       const s = state.subject || '미정';
       const c = state.category || '미정';
       const st = state.convStyle || '미정';
-      
+
       let detail = '미정';
       if (c === '인물') {
         detail = (state.detail2 && state.detail2 !== '미정') ? state.detail2 : (state.detail1 || '미정');
@@ -639,11 +708,11 @@
       } else {
         promptText += `3. 내가 알아보고 싶은 내용이 구체적으로 정해졌으므로:\n`;
         if (state.category === '인물' && state.role === 'self') {
-            promptText += `   - **즉시 해당 인물 본인(${detail})으로 1인칭 빙의해서**, 생생하고 몰입감 있게 첫인사를 건네며 대화를 시작해.\n`;
+          promptText += `   - **즉시 해당 인물 본인(${detail})으로 1인칭 빙의해서**, 생생하고 몰입감 있게 첫인사를 건네며 대화를 시작해.\n`;
         } else if (state.category === '인물' && state.role === 'witness') {
-            promptText += `   - **즉시 해당 인물(${detail})과 가까운 동시대의 지인/목격자로 1인칭 빙의해서**, 생생하고 몰입감 있게 첫인사를 건네며 대화를 시작해.\n`;
+          promptText += `   - **즉시 해당 인물(${detail})과 가까운 동시대의 지인/목격자로 1인칭 빙의해서**, 생생하고 몰입감 있게 첫인사를 건네며 대화를 시작해.\n`;
         } else {
-            promptText += `   - **즉시 해당 시대의 인물이나 사건의 핵심 목격자로 1인칭 빙의해서**, 생생하고 몰입감 있게 첫인사를 건네며 대화를 시작해.\n`;
+          promptText += `   - **즉시 해당 시대의 인물이나 사건의 핵심 목격자로 1인칭 빙의해서**, 생생하고 몰입감 있게 첫인사를 건네며 대화를 시작해.\n`;
         }
       }
 
@@ -655,9 +724,9 @@
       navigator.clipboard.writeText(promptText).then(() => {
         showToast("✨ 프롬프트가 복사되었습니다! 새 창에 붙여넣기 해주세요.");
         setTimeout(() => {
-            const aiSelector = document.getElementById('ai-selector').value;
-            const url = aiSelector === 'chatgpt' ? 'https://chat.openai.com/' : 'https://gemini.google.com/';
-            window.open(url, '_blank');
+          const aiSelector = document.getElementById('ai-selector').value;
+          const url = aiSelector === 'chatgpt' ? 'https://chat.openai.com/' : 'https://gemini.google.com/';
+          window.open(url, '_blank');
         }, 1200);
       }).catch(err => {
         showToast("클립보드 복사에 실패했습니다. 권한을 확인해 주세요.");
@@ -665,4 +734,5 @@
     }
   </script>
 </body>
+
 </html>
